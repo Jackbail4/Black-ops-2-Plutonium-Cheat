@@ -166,9 +166,9 @@ void Style() {
 }
 
 bool init = false, show = true;
-HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags){
-	if (!init){
-		if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice))){
+HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags) {
+	if (!init) {
+		if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice))) {
 			pDevice->GetImmediateContext(&pContext);
 			DXGI_SWAP_CHAIN_DESC sd;
 			pSwapChain->GetDesc(&sd);
@@ -191,52 +191,52 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		}
 	}
 
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-		Style();
-		if (show) {
-			char Name[12];
-			memcpy(Name, (void*)0x2C23194, sizeof(Name));
-			ImGui::Begin("Art of Cheats [Plutonium ESP]", 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse);
-			ImGui::Text("Welcome: %s", Name);
-			ImGui::Separator();
-			ImGui::Text("Friendly");
-			ImGui::BeginChild("Friendlies", ImVec2{ 300,200 }, true);
-			{
-				ImGui::Checkbox("Box 2D", &opt::frn::Box2D);
-				ImGui::Checkbox("Box 3D", &opt::frn::Box3D);
-				ImGui::Checkbox("Snap Lines", &opt::frn::lines);
-				ImGui::Checkbox("Name", &opt::frn::Name);
-				ImGui::Checkbox("Health", &opt::frn::Health);
-				ImGui::ColorEdit3("Color", opt::frn::color);
-			}
-			ImGui::EndChild();
-			ImGui::Text("Enemy");
-			ImGui::BeginChild("Enemy", ImVec2{ 300,200 }, true);
-			{
-				ImGui::Checkbox("Box 2D", &opt::enm::Box2D);
-				ImGui::Checkbox("Box 3D", &opt::enm::Box3D);
-				ImGui::Checkbox("Snap Lines", &opt::enm::lines);
-				ImGui::Checkbox("Name", &opt::enm::Name);
-				ImGui::Checkbox("Health", &opt::enm::Health);
-				ImGui::ColorEdit3("Color", opt::enm::color);
-			}
-			ImGui::EndChild();
-			ImGui::Spacing();
-			ImGui::End();
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	Style();
+	if (show) {
+		char Name[12];
+		memcpy(Name, (void*)0x2C23194, sizeof(Name));
+		ImGui::Begin("Art of Cheats [Plutonium ESP]", 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse);
+		ImGui::Text("Welcome: %s", Name);
+		ImGui::Separator();
+		ImGui::Text("Friendly");
+		ImGui::BeginChild("Friendlies", ImVec2{ 300,200 }, true);
+		{
+			ImGui::Checkbox("Box 2D", &opt::frn::Box2D);
+			ImGui::Checkbox("Box 3D", &opt::frn::Box3D);
+			ImGui::Checkbox("Snap Lines", &opt::frn::lines);
+			ImGui::Checkbox("Name", &opt::frn::Name);
+			ImGui::Checkbox("Health", &opt::frn::Health);
+			ImGui::ColorEdit3("Color", opt::frn::color);
 		}
+		ImGui::EndChild();
+		ImGui::Text("Enemy");
+		ImGui::BeginChild("Enemy", ImVec2{ 300,200 }, true);
+		{
+			ImGui::Checkbox("Box 2D", &opt::enm::Box2D);
+			ImGui::Checkbox("Box 3D", &opt::enm::Box3D);
+			ImGui::Checkbox("Snap Lines", &opt::enm::lines);
+			ImGui::Checkbox("Name", &opt::enm::Name);
+			ImGui::Checkbox("Health", &opt::enm::Health);
+			ImGui::ColorEdit3("Color", opt::enm::color);
+		}
+		ImGui::EndChild();
+		ImGui::Spacing();
+		ImGui::End();
+	}
 
-		//if (ClientGS->isInGame) {
-			HackLoop();
-		//}
+	//if (ClientGS->isInGame) {
+	HackLoop();
+	//}
 
-		ImGui::Render();
+	ImGui::Render();
 
-		if (GetAsyncKeyState(VK_INSERT) & 1) { show = !show; }
+	if (GetAsyncKeyState(VK_INSERT) & 1) { show = !show; }
 
-		pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
-		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
 
